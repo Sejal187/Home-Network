@@ -1,5 +1,8 @@
 # Home Network Documentation
 
+- **Date: 29th March 2025**
+- **Written by: Sejalpreet Kaur**
+
 This repository contains the documentation for the setup, configuration, and security of my home network.
 
 ## Contents:
@@ -8,7 +11,6 @@ This repository contains the documentation for the setup, configuration, and sec
 - Device Information
 - IP Addressing Scheme
 - Configuration Backup Methods
-- Security Practices for Credential Management
 
 Feel free to explore the sections to understand how the network is structured.
 
@@ -16,13 +18,17 @@ Feel free to explore the sections to understand how the network is structured.
 
 # Physical Topology
 
-This section describes the physical setup of the home network.
+The physical topology represents the actual arrangement of networking devices in the home environment. Below is a detailed layout of device locations, connections, and cabling:
 
-## Devices and Locations:
-1. **Router** (Living Room) - Connected to the internet via WAN port.
-2. **Switch** (Home Office) - Connected to the router, providing connections to multiple devices.
-3. **Laptop** (Bedroom) - Connected to the router via Wi-Fi.
-4. **Printer** (Living Room) - Connected to the switch via Ethernet.
+### Devices and Locations:
+- **Router (ISR4331)** - Located in Study Room
+- **Switch (2960-24TT)** - Connected to the Router, located in Study Room
+- **Access Point** - Located centrally for optimal wireless coverage
+- **PC (PC-PT)** - Study Room, wired to Switch
+- **Laptop (Laptop-PT)** - Study Room, wired to Switch
+- **Printer (Printer-PT)** - Study Room, wired to Switch
+- **Tablet (TabletPC-PT)** - Wireless connection via Access Point
+- **Smartphones (SMARTPHONE-PT)** - Connected wirelessly via Access Point
 
 ## Cabling:
 - **Router to Switch**: Ethernet Cable (Cat6)
@@ -37,79 +43,96 @@ This section describes the physical setup of the home network.
 
 # Logical Topology
 
-This section covers the logical network configuration.
+The logical topology describes the data flow and network communication structure. Below is the logical representation of the network:
 
-## IP Addressing:
-- **Router (WAN)**: 192.168.1.1
-- **Router (LAN)**: 192.168.0.1
-- **Laptop**: 192.168.0.101 (Static IP)
-- **Printer**: 192.168.0.102 (Static IP)
+### IP Addressing Scheme:
+- **Router (ISR4331)**: `192.168.1.1/24` (Gateway, DHCP Server)
+- **Switch (2960-24TT)**: `192.168.1.10/24`
+- **Access Point**: `192.168.1.3/24`
+- **PC (PC-PT)**: `192.168.1.2/24`
+- **Laptop (Laptop-PT)**: `192.168.1.5/24`
+- **Printer (Printer-PT)**: `192.168.1.4/24`
+- **Tablet (TabletPC-PT)**: DHCP assigned
+- **Smartphones (SMARTPHONE-PT)**: DHCP assigned
+
+### DHCP Configuration:
+The router is responsible for assigning IP addresses dynamically to wireless devices and other DHCP-configured clients.
+
+### Default Gateway:
+All devices use `192.168.1.1` as their default gateway to access external networks.
 
 ## Diagram:
 ![Screenshot 2025-03-28 201517](https://github.com/user-attachments/assets/d02ff3f0-a5c1-4220-a067-ad6e6f93b969)
 
-## Network Segmentation:
-- **Main Network (192.168.0.x)**: Devices like laptop, printer, etc.
-- **Guest Network (192.168.1.x)**: Used for guest devices.
+---
 
-## Routing:
-- **Inter-VLAN Routing**: Configured to allow communication between main network and guest network.
+## Device Information
+
+### **Router: Cisco ISR4331**
+- **Brand:** Cisco
+- **Model:** ISR4331
+- **Qualities:**
+  - Provides internet access and serves as the network's gateway.
+  - Functions as the DHCP server, firewall, and NAT device.
+  - Connected to ISP modem and the main switch.
+  - Supports advanced security features and VPN connectivity.
+
+### **Switch: Cisco 2960-24TT**
+- **Brand:** Cisco
+- **Model:** 2960-24TT
+- **Qualities:**
+  - 24-port managed switch for wired network expansion.
+  - Connects wired devices (PC, Laptop, Printer, Access Point).
+  - Provides VLAN support and traffic management.
+
+### **Access Point**
+- **Brand:** Ubiquiti UniFi AP
+- **Model:** UAP-AC-LR
+- **Qualities:**
+  - Extends Wi-Fi coverage to wireless devices.
+  - Uses WPA3 encryption for security.
+  - Connected to the switch via Ethernet.
+
+### **PC (PC-PT)**
+- **Usage:** Work, gaming, and network administration.
+- **Static IP:** `192.168.1.2`
+
+### **Laptop (Laptop-PT)**
+- **Usage:** Browsing, remote work, and multimedia tasks.
+- **Static IP:** `192.168.1.5`
+
+### **Printer (Printer-PT)**
+- **Usage:** Shared across the network for printing needs.
+- **Static IP:** `192.168.1.4`
+
+### **Tablet (TabletPC-PT)**
+- **Connection:** Wireless via Access Point
+- **IP Assignment:** DHCP
+- **Usage:** Reading, streaming, and remote access.
+
+### **Smartphones (SMARTPHONE-PT)**
+- **Connection:** Wireless via Access Point
+- **IP Assignment:** DHCP
+- **Usage:** Communication, browsing, and smart home control.
 
 ---
 
-# Device Information
-
-## Router:
-- **Model**: TP-Link Archer C7
-- **Firmware Version**: 1.5.0
-- **Interfaces**: 4x Ethernet, 1x WAN, Wi-Fi
-- **IP Address**: 192.168.0.1
-
-## Switch:
-- **Model**: Netgear GS108
-- **Ports Used**: Ports 1-5 for devices, Port 8 to router
-
-## Laptop:
-- **Model**: Dell XPS 13
-- **Operating System**: Windows 11
-- **IP Address**: 192.168.0.101
+## Device Configuration & Security
+- **Router and Switch configurations** are backed up regularly.
+- **Access credentials** are securely stored in a password manager.
+- **Wireless Security:** WPA3 encryption is enabled.
+- **MAC Filtering** is enabled for additional access control.
 
 ---
 
-# Addressing Documentation
-
-## IP Scheme:
-- **Router**: 192.168.0.1 (Static)
-- **Laptop**: 192.168.0.101 (Static)
-- **Printer**: 192.168.0.102 (Static)
-- **DHCP Range**: 192.168.0.100 to 192.168.0.199
-
-## Subnet Mask:
-- **Subnet**: 255.255.255.0
+## Backup & Maintenance
+- Configurations are backed up to a secure cloud repository.
+- Regular firmware updates are applied to all devices.
+- Logs are monitored for suspicious activity.
 
 ---
 
-# Configuration Backup
-
-- **Router**: Configurations are backed up to a cloud service (Google Drive).
-- **Switch**: No backup necessary as it uses default configurations.
-- **Laptop**: Configurations are backed up using Windows File History and OneDrive.
-
----
-
-# Security
-
-## Password Manager:
-- **Tool**: 1Password
-- **Encryption**: AES-256 encryption is used to securely store login credentials.
-
-## Two-Factor Authentication:
-- **Enabled on Router**: 2FA enabled for router admin interface.
-- **VPN**: 2FA is enabled for remote access VPN.
-
----
-
-# Change Log
+## Change Log
 
 - **March 25, 2025**: Updated router firmware to version 1.5.0.
-- **March 20, 2025**: Added a printer to the network, assigned IP 192.168.0.102.
+
